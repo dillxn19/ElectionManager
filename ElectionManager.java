@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class ElectionManager {
 	
@@ -56,7 +55,7 @@ public class ElectionManager {
 			String[][] updatedCandidates = new String[candidates.length][3];
 			for (int z = 0; z < numCandidates - 1; z++)
 			{
-				if (!Arrays.deepEquals(candidates[z],candidateToRemove))
+				if (!candidates[z].equals(candidateToRemove))
 				{
 					updatedCandidates[z] = candidates[z];
 				}
@@ -70,10 +69,50 @@ public class ElectionManager {
 	public static String findWinner(String[][] candidates, int numCandidates)
 	{
 		int totalVotes = 0;
+		int highestVotes = 0;
+		int indexOfHighest = 0;
 		for (int i = 0; i < numCandidates; i++)
 		{
-			totalVotes += candidates[i][2];
+			totalVotes += Integer.parseInt(candidates[i][2]);
+			if (Integer.parseInt(candidates[i][2]) > highestVotes)
+			{
+				highestVotes = Integer.parseInt(candidates[i][2]);
+				indexOfHighest = i;
+			}
 		}
+		if ((double) (highestVotes)/(double) (totalVotes) <= 0.5)
+		{
+			return "CONTINGENT";
+		}
+		else
+		{
+			return candidates[indexOfHighest][0] + " (" + candidates[indexOfHighest][1] + ")"
+					+ " - " + (double) (highestVotes)/(double) (totalVotes) * 100 + "%";
+		}
+	}
+	
+	
+	public static String findLowestPollingCandidate(String[][] candidates, int numCandidates)
+	{
+		int indexOfLowest = 0;
+		if (numCandidates == 0 || numCandidates == 1)
+		{
+			return "UNCONTESTED";
+		}
+		for (int i = 0; i < numCandidates; i++)
+		{
+			if (Integer.parseInt(candidates[i][2]) < Integer.parseInt(candidates[indexOfLowest][2]))
+			{
+				indexOfLowest = i;
+			}
+
+		}
+
+		System.out.println(candidates[indexOfLowest][0] + " (" + candidates[indexOfLowest][1] + ")"
+				+ " - " + candidates[indexOfLowest][2]);
+		return (candidates[indexOfLowest][0] + " (" + candidates[indexOfLowest][1] + ")"
+				+ " - " + candidates[indexOfLowest][2]);
+		
 	}
 
 }
