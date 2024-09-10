@@ -3,11 +3,8 @@
 
 import java.util.Arrays;
 
-// TODO: class header comment (and ALL non-provided method header comments!)
 public class ElectionManagerTester {
-  
-  //// CONTAINS CANDIDATE: one provided tester method, two (2) TODO
-  
+    
   public static boolean testContainsEmpty() {
     // for your use: an "empty" candidate list
     String[][] candidateList = {null, null, null, null, null, null};
@@ -36,17 +33,13 @@ public class ElectionManagerTester {
 	  String targetParty = "TestParty";
 	  boolean expected = false;
 		    
-		    // (1b) call the method we are testing
 	  boolean actual = 
 			  ElectionManager.containsCandidate(candidateList, size, targetName, targetParty);
 		    
-		    // (2) verify that the expected method return value and the actual return value match
 	  if (expected != actual) return false;
 		    
-		    // (3) since THIS method should not modify the array, check it against a copy we made
 	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
 		    
-		    // (4) if we have not yet returned false, we can now return true as all tests have passed!
 	  return true;  // TODO
   }
   
@@ -93,7 +86,25 @@ public class ElectionManagerTester {
   //// ADD CANDIDATE: one provided tester method, three (3) TODO
   
   public static boolean testAddToEmpty() {
-    return false;  // TODO
+	  String[][] candidateList = {
+		        null, null, null};
+	  String newName = "Goldeen";
+	  String newParty = "Water";
+	  int newVotes = 5;
+		    
+	  String[][] expectedList = {
+		        {"Goldeen", "Water", "5"}, 
+		        null, null};  
+	  int size = 0;
+	  int expected = 1;
+		    
+	  int actual = 
+			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
+	  if (expected != actual) return false;
+		    
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+		    
+	  return true;  
   }
   
   /**
@@ -126,8 +137,7 @@ public class ElectionManagerTester {
     
     // (1b) call the method we are testing
     int actual = 
-        ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);
-    
+        ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
     // (2) verify that the expected method return value and the actual return value match
     if (expected != actual) return false;
     
@@ -139,11 +149,65 @@ public class ElectionManagerTester {
   }
   
   public static boolean testAddCandidateErrors() {
-    return false;  // TODO
+	  String[][] candidateList = {
+			  {"Slowpoke", "Water", "3"},
+		        {"Squirtle", "Water", "127"},
+		        {"Wooper", "Water", "300"},
+		        null, null, null};
+	  String newName = "Slowpoke";
+	  String newParty = "Water";
+	  int newVotes = 3;
+		    
+	  String[][] expectedList = {
+			  {"Slowpoke", "Water", "3"},
+		        {"Squirtle", "Water", "127"},
+		        {"Wooper", "Water", "300"},
+		        null, null, null};  
+	  int size = 3;
+	  int expected = 3;
+		    
+	  int actual = 
+			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
+	  if (expected != actual) return false;
+		    
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+	  
+	  String newName2 = "Slowpoke";
+	  String newParty2 = "Water";
+	  int newVotes2 = -3;
+	  
+	  int actual2 = 
+			  ElectionManager.addCandidate(candidateList, size, newName2, newParty2, newVotes2);  
+	  if (expected != actual2) return false;
+		    
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+		    
+	  return true;
   }
   
   public static boolean testAddToFull() {
-    return false;  // TODO
+	  String[][] candidateList = {
+			  {"Slowpoke", "Water", "3"},
+		        {"Squirtle", "Water", "127"},
+		        {"Wooper", "Water", "300"}};
+	  String newName = "Goldeen";
+	  String newParty = "Water";
+	  int newVotes = 5;
+		    
+	  String[][] expectedList = {
+			  {"Slowpoke", "Water", "3"},
+		        {"Squirtle", "Water", "127"},
+		        {"Wooper", "Water", "300"}};  
+	  int size = 3;
+	  int expected = 3;
+		    
+	  int actual = 
+			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
+	  if (expected != actual) return false;
+		    
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+		    
+	  return true; 
   }
   
   //// DROP CANDIDATE: one provided tester method, two (2) TODO
@@ -245,7 +309,6 @@ public class ElectionManagerTester {
 	  double expectedVotePct = 300.0/(300)*100;
 	  int size = 1;
 		    
-		    // (1b) call the method we are testing
 	  String result = ElectionManager.findWinner(candidateList, size);
 		        
 		    // (2) verify that the expected method return value and the actual return value match
@@ -284,7 +347,6 @@ public class ElectionManagerTester {
    */
   public static boolean testClearWinner() {
     
-    // (1a) set up the test variables
     String[][] candidateList = {
         {"Slowpoke", "Water", "3"},
         {"Squirtle", "Water", "97"},
@@ -296,13 +358,8 @@ public class ElectionManagerTester {
     double expectedVotePct = 300.0/(300+97+3)*100;
     int size = 3;
     
-    // (1b) call the method we are testing
     String result = ElectionManager.findWinner(candidateList, size);
         
-    // (2) verify that the expected method return value and the actual return value match
-    // NOTE: for a String, this takes a little more processing to do sensitively.
-    // We expect this result to be "Wooper (Water) - 75.0%" but there may be some weirdness
-    // especially with that percentage. See how we do it here:
     
     String[] resultPieces = result.split(" "); // get the space-separated pieces of the string
     
@@ -319,10 +376,8 @@ public class ElectionManagerTester {
     double actualVotePct = Double.valueOf(resultPieces[3].substring(0,resultPieces[3].length()-1));
     if (Math.abs(actualVotePct-expectedVotePct) > 0.01) return false;
     
-    // (3) this scenario should NOT modify the input array; check it against a copy we made
     if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
     
-    // (4) if we have not yet returned false, we can now return true as all tests have passed!
     return true;
     
   }
@@ -425,15 +480,15 @@ public class ElectionManagerTester {
     // NOTE TO STUDENTS: If you create any additional tests for any of the methods in
     // ElectionManager, add their names to the appropriate array below!
     String[] containsTests = {"testContainsEmpty", "testDoesNotContain", "testDoesContain"};
-//    String[] addTests = {"testAddToEmpty", "testAddToNonEmpty", "testAddCandidateErrors",
-//        "testAddToFull"};
+    String[] addTests = {"testAddToEmpty", "testAddToNonEmpty", "testAddCandidateErrors",
+        "testAddToFull"};
     String[] dropTests = {"testDropOnlyCandidate", "testDropFirstCandidate", 
         "testDropCandidateNotRunning"};
     String[] winTests = {"testUncontestedWinner", "testClearWinner", "testContingentElection"};
     String[] lowTests = {"testUncontestedLowestPolling", "testLowestUniqueVoteCount", 
         "testLowestVoteCountTied"};
     
-    String[][] testNames = {containsTests, dropTests, winTests, lowTests};
+    String[][] testNames = {containsTests, addTests, dropTests, winTests, lowTests};
     
     // NOTE TO STUDENTS: this for-loop is moving through the method names we've added to the 2D 
     // array testNames and attempting to call methods with those names from this tester
