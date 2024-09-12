@@ -1,9 +1,45 @@
-// TODO: File header comment
-// Be sure to credit the outside help section in the file header
+/////////////// FILE HEADER (INCLUDE IN EVERY FILE) //////////////////////////
+//
+// Title:    P01 Election Manager
+// Course:   CS 300 Fall 2024
+//
+// Author:   Dillan Haran
+// Email:    dharan2@wisc.edu
+// Lecturer: Hobbes LeGault
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
+// 
+// Partner Name:    N/A
+// Partner Email:   N/A
+// Partner Lecturer's Name: N/A
+// 
+// VERIFY THE FOLLOWING BY PLACING AN X NEXT TO EACH TRUE STATEMENT:
+//   ___ Write-up states that pair programming is allowed for this assignment.
+//   ___ We have both read and understand the course Pair Programming Policy.
+//   ___ We have registered our team prior to the team registration deadline.
+//
+//////////////////////// ASSISTANCE/HELP CITATIONS ////////////////////////////
+//
+// Persons:         N/A
+// Online Sources:  https://apcentral.collegeboard.org/media/pdf/ap-computer-science-a-java-
+//quick-reference_0.pdf
+// -Used it as a reference for Java syntax (ex. compareTo)
+//
+///////////////////////////////////////////////////////////////////////////////
 
 import java.util.Arrays;
 
+/**
+ * Class used to test each of the ElectionManager class methods
+ */
+
 public class ElectionManagerTester {
+	
+	/**
+	 * Tests if candidate is found in an empty candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
     
   public static boolean testContainsEmpty() {
     // for your use: an "empty" candidate list
@@ -12,14 +48,22 @@ public class ElectionManagerTester {
     String targetName = "Wooper";
     String targetParty = "Water";
     boolean expected = false;
-    boolean actual = ElectionManager.containsCandidate(candidateList, size, targetName, targetParty);
+    boolean actual = 
+    		ElectionManager.containsCandidate(candidateList, size, targetName, targetParty);
     
-    if (expected != actual)
+    if (expected != actual) // checks if return value same as expected
     {
-    	return false;  // TODO
+    	return false;  
     }
     return true;
   }
+  
+	/**
+	 * Tests a candidate not found in the candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
   
   public static boolean testDoesNotContain() {
 	  String[][] candidateList = {
@@ -29,6 +73,7 @@ public class ElectionManagerTester {
 		        null, null, null};
 	  String[][] candidateCopy = Arrays.copyOf(candidateList, candidateList.length);
 	  int size = 3;
+	  // test variables that are not in array
 	  String targetName = "Test";
 	  String targetParty = "TestParty";
 	  boolean expected = false;
@@ -36,11 +81,13 @@ public class ElectionManagerTester {
 	  boolean actual = 
 			  ElectionManager.containsCandidate(candidateList, size, targetName, targetParty);
 		    
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if return value expected
 		    
-	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
+	  
+	  // checks if array is changed
+	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false; 
 		    
-	  return true;  // TODO
+	  return true;  
   }
   
   /**
@@ -83,9 +130,15 @@ public class ElectionManagerTester {
     
   }
   
-  //// ADD CANDIDATE: one provided tester method, three (3) TODO
+    
+	/**
+	 * Tests if candidate is added to an empty candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
   
   public static boolean testAddToEmpty() {
+	  // test with an empty array
 	  String[][] candidateList = {
 		        null, null, null};
 	  String newName = "Goldeen";
@@ -100,9 +153,9 @@ public class ElectionManagerTester {
 		    
 	  int actual = 
 			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if candidates count increased 
 		    
-	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false; // checks if array is updated
 		    
 	  return true;  
   }
@@ -148,7 +201,15 @@ public class ElectionManagerTester {
     return true;
   }
   
+	/**
+	 * Tests if candidate already existing or candidate with negative votes is added to candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
+  
   public static boolean testAddCandidateErrors() {
+	  // test variables
 	  String[][] candidateList = {
 			  {"Slowpoke", "Water", "3"},
 		        {"Squirtle", "Water", "127"},
@@ -157,7 +218,8 @@ public class ElectionManagerTester {
 	  String newName = "Slowpoke";
 	  String newParty = "Water";
 	  int newVotes = 3;
-		    
+	  
+	  // expected list, nothing should change
 	  String[][] expectedList = {
 			  {"Slowpoke", "Water", "3"},
 		        {"Squirtle", "Water", "127"},
@@ -168,24 +230,33 @@ public class ElectionManagerTester {
 		    
 	  int actual = 
 			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if return value expected
 		    
-	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false; // checks if array unchanged
 	  
-	  String newName2 = "Slowpoke";
-	  String newParty2 = "Water";
+	  // test adding a candidate with negative votes
+	  String newName2 = "Slow";
+	  String newParty2 = "Wat";
 	  int newVotes2 = -3;
 	  
 	  int actual2 = 
 			  ElectionManager.addCandidate(candidateList, size, newName2, newParty2, newVotes2);  
-	  if (expected != actual2) return false;
+	  if (expected != actual2) return false; // checks return value expected
 		    
-	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false; // checks if array unchanged
 		    
 	  return true;
   }
   
+  
+	/**
+	 * Tests if candidate is added to a full candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
   public static boolean testAddToFull() {
+	  // tests full array
 	  String[][] candidateList = {
 			  {"Slowpoke", "Water", "3"},
 		        {"Squirtle", "Water", "127"},
@@ -203,20 +274,26 @@ public class ElectionManagerTester {
 		    
 	  int actual = 
 			  ElectionManager.addCandidate(candidateList, size, newName, newParty, newVotes);  
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if number of candidates is unchanged
 		    
-	  if (!Arrays.deepEquals(candidateList, expectedList)) return false;
+	  if (!Arrays.deepEquals(candidateList, expectedList)) return false; // checks if array is changed
 		    
 	  return true; 
   }
   
-  //// DROP CANDIDATE: one provided tester method, two (2) TODO
+	/**
+	 * Tests if candidate dropped in a candidate list with one candidate
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
   
   public static boolean testDropOnlyCandidate() {
+	  // tests an array with only obe candidate
 	  String[][] candidateList = {
 		        {"Slowpoke", "Water", "3"},
 		        null, null, null};
-	  String[][] candidateCopy = Arrays.copyOf(candidateList, candidateList.length);
+	  String[][] candidateExpected = {null, null, null, null};
 	  String name = "Slowpoke";
 	  String party = "Water";
 	  int size = 1;
@@ -225,23 +302,35 @@ public class ElectionManagerTester {
 	  int actual =
 	        ElectionManager.dropCandidate(candidateList, size, name, party);
 	    
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if return value expected
 	    
 
 	    
-	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
+	  if (!Arrays.deepEquals(candidateList, candidateExpected)) return false; 
+	  // checks if array is changed accordingly
 	    
-	    // (4) if we have not yet returned false, we can now return true as all tests have passed!
 	  return true;
   }
   
+	/**
+	 * Tests if candidate is dropped when they are the first candidate in candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
+  
   public static boolean testDropFirstCandidate() {
+	  
 	  String[][] candidateList = {
 	            {"Slowpoke", "Water", "3"},
 	            {"Squirtle", "Water", "127"},
 	            {"Wooper", "Water", "300"},
 	            null, null, null};
-	  String[][] candidateCopy = Arrays.copyOf(candidateList, candidateList.length);
+	  // array where first candidate dropped
+	  String[][] candidateExpected = {
+			  {"Squirtle", "Water", "127"},
+	            {"Wooper", "Water", "300"},
+	            null, null, null, null};
 	  String name = "Slowpoke";
 	  String party = "Water";
       int size = 3;
@@ -249,9 +338,10 @@ public class ElectionManagerTester {
 	  int actual =
 	            ElectionManager.dropCandidate(candidateList, size, name, party);
 	        
-	  if (expected != actual) return false;
+	  if (expected != actual) return false; // checks if return value is expected
 	        
-	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
+	  if (!Arrays.deepEquals(candidateList, candidateExpected)) return false; 
+	  // checks if array is changed to expected
 	        
 	  return true;  }
   
@@ -297,7 +387,13 @@ public class ElectionManagerTester {
     
   }
   
-  //// FIND WINNER: one provided tester method, two (2) TODO
+
+  
+	/**
+	 * Tests if candidate is found to be the winner when they are uncontested
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
   
   public static boolean testUncontestedWinner() {
 	  String[][] candidateList = {
@@ -335,7 +431,7 @@ public class ElectionManagerTester {
 	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
 		    
 		    // (4) if we have not yet returned false, we can now return true as all tests have passed!
-	  return true;  // TODO
+	  return true;  
   }
   
   /**
@@ -382,7 +478,15 @@ public class ElectionManagerTester {
     
   }
   
+	/**
+	 * Tests if any candidate is found the winner when none have majority
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
+  
   public static boolean testContingentElection() {
+	  // array with no one having majority of the votes
 	  String[][] candidateList = {
 		        {"Slowpoke", "Water", "200"},
 		        {"Squirtle", "Water", "301"},
@@ -398,33 +502,48 @@ public class ElectionManagerTester {
 		    
 
 
-	  if (!expected.equals(result))
+	  if (!expected.equals(result)) // checks if returns CONTINGENT
 	  {
 		  return false;
 	  }
 		    
-	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false;
+	  if (!Arrays.deepEquals(candidateList, candidateCopy)) return false; // checks if array is changed
 		    
-	  return true;  // TODO
+	  return true;  
   }
   
-  //// FIND LOWEST-POLLING: no provided tester methods, three (3) TODO
   
+	/**
+	 * Tests if candidate is found to have the lowest votes when they are uncontested
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+    
   public static boolean testUncontestedLowestPolling() {
+	  // array with only one candidate
 	  String[][] candidateList = {
 		        {"Slowpoke", "Water", "3"},
 		        null, null, null};
 	  int size = 1;
 	  String result = ElectionManager.findLowestPollingCandidate(candidateList,size);
 	  String expected = "UNCONTESTED";
-	  if (!result.equals(expected))
+	  if (!result.equals(expected)) // checks if returns UNCONTESTED
 	  {
 	  	return false; 
 	  }
 	  return true;  
   }
   
+  
+	/**
+	 * Tests if candidate is found to have the lowest votes when they have the least amount of 
+	 * votes in the candidate list
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
   public static boolean testLowestUniqueVoteCount() {
+	  // array with "Slowpoke" having lowest vote count
 	  String[][] candidateList = {
 		        {"Slowpoke", "Water", "3"},
 		        {"Squirtle", "Water", "97"},
@@ -433,14 +552,24 @@ public class ElectionManagerTester {
 	  int size = 3;
 	  String result = ElectionManager.findLowestPollingCandidate(candidateList,size);
 	  String expected = "Slowpoke (Water) - 3";
-	  if (!result.equals(expected))
+	  if (!result.equals(expected)) // checks if returns candidate with lowest votes
 	  {
 	  	return false; 
-	  }// TODO
+	  }
 	  return true;
   }
   
+  
+	/**
+	 * Tests if candidate found alphabetically first to have the lowest votes when 
+	 * candidates are tied for it
+	 * @return false if any of the scenarios we test have results other than what we expect;
+	 * true ONLY if all of our expectations are met by the method we are testing
+	 */
+  
+  
   public static boolean testLowestVoteCountTied() {
+	  // array with two candidates tied for lowest
 	  String[][] candidateList = {
 		        {"Slowpoke", "Water", "3"},
 		        {"Squirtle", "Water", "3"},
@@ -449,11 +578,11 @@ public class ElectionManagerTester {
 	  int size = 3;
 	  String result = ElectionManager.findLowestPollingCandidate(candidateList,size);
 	  String expected = "Slowpoke (Water) - 3";
-	  if (!result.equals(expected))
+	  if (!result.equals(expected)) // checks if the first candidate with the lowest votes is returned
 	  {
 	  	return false; 
-	  }// TODO
-	  return true;  // TODO
+	  }
+	  return true;  
   }
 
   /**
@@ -477,8 +606,6 @@ public class ElectionManagerTester {
     boolean allPass = true, singlePass = true;
     String printFormat = "%-29s: %s\n";
     
-    // NOTE TO STUDENTS: If you create any additional tests for any of the methods in
-    // ElectionManager, add their names to the appropriate array below!
     String[] containsTests = {"testContainsEmpty", "testDoesNotContain", "testDoesContain"};
     String[] addTests = {"testAddToEmpty", "testAddToNonEmpty", "testAddCandidateErrors",
         "testAddToFull"};
@@ -490,9 +617,6 @@ public class ElectionManagerTester {
     
     String[][] testNames = {containsTests, addTests, dropTests, winTests, lowTests};
     
-    // NOTE TO STUDENTS: this for-loop is moving through the method names we've added to the 2D 
-    // array testNames and attempting to call methods with those names from this tester
-    // (specifically line 286 here). See Java's reflection framework for more details!
     for (String[] testSet : testNames) {
       for (String name : testSet) {
         singlePass = (boolean) ElectionManagerTester.class.getDeclaredMethod(name).invoke(null);
